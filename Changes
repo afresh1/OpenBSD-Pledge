@@ -1,0 +1,6 @@
+Revision history for Perl extension OpenBSD::Pledge.
+
+0.01  Sun Nov  1 18:58:10 2015
+	- original version; created by h2xs 1.23 with options
+		-F -DPLEDGENAMES -aAcxn OpenBSD::Pledge sys/pledge.h
+

@@ -1,0 +1,8 @@
+Changes
+Makefile.PL
+MANIFEST
+Pledge.xs
+ppport.h
+README
+t/OpenBSD-Pledge.t
+lib/OpenBSD/Pledge.pm
