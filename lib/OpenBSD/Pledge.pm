@@ -18,6 +18,7 @@ sub pledge {
     my (@flags) = @_;
 
     my $paths;
+    $paths = pop @flags if @flags and ref $flags[-1] eq 'ARRAY';
 
     my %seen;
     my $flags = join q{ }, sort grep { !$seen{$_}++ } @flags;

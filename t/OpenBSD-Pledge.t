@@ -64,10 +64,15 @@ xspledge_ok cpath => sub { mkdir q{/} };
     my @calls;
     no warnings 'redefine';
     local *OpenBSD::Pledge::_pledge = sub { push @calls, \@_; return 1 };
+    use warnings 'redefine';
 
     OpenBSD::Pledge::pledge(qw( foo bar foo baz ));
-    is_deeply \@calls, [ [ "bar baz foo", undef ] ],
-        "Sorted and unique flags";
+    OpenBSD::Pledge::pledge(qw( foo qux baz quux ), ["/tmp"]);
+
+    is_deeply \@calls, [
+        [ "bar baz foo",      undef ],
+        [ "baz foo quux qux", ["/tmp"] ],
+    ], "Sorted and unique flags";
 }
 
 #########################
