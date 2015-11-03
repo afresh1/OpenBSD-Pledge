@@ -18,3 +18,10 @@ pledgenames()
                 newSVpv(pledgenames[i].name, strlen(pledgenames[i].name))
             ) );
         XSRETURN(i);
+
+int
+_pledge(char * flags, SV * paths)
+	CODE:
+        RETVAL = pledge(flags, NULL) != -1;
+	OUTPUT:
+		RETVAL
