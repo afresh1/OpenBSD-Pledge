@@ -4,26 +4,10 @@ use 5.020002;
 use strict;
 use warnings;
 
-require Exporter;
-
-our @ISA = qw(Exporter);
-
-# Items to export into callers namespace by default. Note: do not export
-# names by default without a very good reason. Use EXPORT_OK instead.
-# Do not simply export all your public functions/methods/constants.
-
-# This allows declaration	use OpenBSD::Pledge ':all';
-# If you do not need this, moving things directly into @EXPORT or @EXPORT_OK
-# will save memory.
-our %EXPORT_TAGS = ( 'all' => [ qw(
-	
-) ] );
-
+use parent 'Exporter';
+our %EXPORT_TAGS = ( 'all' => [ qw( pledge pledgenames ) ] );
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
-
-our @EXPORT = qw(
-	
-);
+our @EXPORT = qw( pledge ); ## no critic 'export'
 
 our $VERSION = '0.01';
 
@@ -64,9 +48,9 @@ Blah blah blah.
 
 =head2 EXPORT
 
-None by default.
+Exports L</pledge> by default.
 
-
+C<:all> will also export L</pledgenames>
 
 =head1 SEE ALSO
 
