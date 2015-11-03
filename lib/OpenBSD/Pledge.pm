@@ -30,7 +30,16 @@ our $VERSION = '0.01';
 require XSLoader;
 XSLoader::load('OpenBSD::Pledge', $VERSION);
 
-# Preloaded methods go here.
+sub pledge {
+    my (@flags) = @_;
+
+    my $paths;
+
+    my %seen;
+    my $flags = join q{ }, sort grep { !$seen{$_}++ } @flags;
+
+    return _pledge( $flags, $paths );
+}
 
 1;
 __END__

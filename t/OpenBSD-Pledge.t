@@ -58,6 +58,19 @@ xspledge_ok wpath => sub { sysopen my $fh, 'FOO',         O_WRONLY };
 xspledge_ok cpath => sub { mkdir q{/} };
 
 #########################
+# PLEDGE
+#########################
+{
+    my @calls;
+    no warnings 'redefine';
+    local *OpenBSD::Pledge::_pledge = sub { push @calls, \@_; return 1 };
+
+    OpenBSD::Pledge::pledge(qw( foo bar foo baz ));
+    is_deeply \@calls, [ [ "bar baz foo", undef ] ],
+        "Sorted and unique flags";
+}
+
+#########################
 done_testing;
 
 1; # to shut up critic
