@@ -3,10 +3,7 @@
 #include "perl.h"
 #include "XSUB.h"
 
-#include "ppport.h"
-
 #include <sys/pledge.h>
 
-
-MODULE = OpenBSD::Pledge		PACKAGE = OpenBSD::Pledge		
+MODULE = OpenBSD::Pledge		PACKAGE = OpenBSD::Pledge
 
