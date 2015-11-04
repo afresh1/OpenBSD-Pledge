@@ -58,6 +58,37 @@ xspledge_ok wpath => sub { sysopen my $fh, 'FOO',         O_WRONLY };
 xspledge_ok cpath => sub { mkdir q{/} };
 
 #########################
+# _PLEDGE with rpath
+#########################
+
+eval { OpenBSD::Pledge::_pledge("", {}) };
+like $@, qr/not an ARRAY reference/, "Correct error for non arrayref";
+
+{
+    my $pid = fork // die "Unable to fork: $!";
+
+    if ( !$pid ) {
+        OpenBSD::Pledge::_pledge( "stdio rpath", [ "/tmp", "/usr/bin/perl" ] )
+            || die $!;
+
+        -e "/tmp"          or die "# Can't read /tmp";
+        -e "/usr"          or die "# Can't read /usr";
+        -e "/usr/bin"      or die "# Can't read /usr/bin";
+        -e "/usr/bin/perl" or die "# Can't read /usr/bin/perl";
+
+        -e "/usr/bin/awk" and die "# Can't read /usr/bin/awk";
+        -e "/usr/local"   and die "# Can read /usr/local";
+        -e "/var"         and die "# Can read /var";
+        -e "/var/log"     and die "# Can read /var/log";
+
+        exit;
+    }
+
+    waitpid $pid, 0;
+    is $?, 0, "OK with pledge";
+}
+
+#########################
 # PLEDGE
 #########################
 {
