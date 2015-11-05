@@ -1,0 +1,9 @@
+--check-syntax 
+
+--indent-columns=8 
+--entab-leading-whitespace=8
+--continuation-indentation=4
+
+# Eeww
+--cuddled-else
+--opening-sub-brace-on-new-line
