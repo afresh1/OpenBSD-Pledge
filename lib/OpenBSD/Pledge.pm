@@ -27,25 +27,34 @@ sub pledge {
 }
 
 1;
+
+## no critic 'pod sections'
 __END__
-# Below is stub documentation for your module. You'd better edit it!
 
 =head1 NAME
 
-OpenBSD::Pledge - Perl extension for blah blah blah
+OpenBSD::Pledge - Perl interface to OpenBSD pledge(2)
 
 =head1 SYNOPSIS
 
   use OpenBSD::Pledge;
-  blah blah blah
+  my $file = "/usr/share/dict/words";
+  pledge(qw( stdio rpath ), [$file]);
+
+  open my $fh, '<', $file or die "Unable to open $file: $!\n";
+  while (<$fh>) {
+    print if /pledge/i;
+  }
+  close $fh;
 
 =head1 DESCRIPTION
 
-Stub documentation for OpenBSD::Pledge, created by h2xs. It looks like the
-author of the extension was negligent enough to leave the stub
-unedited.
+This module provides a perl interface to OpenBSD's pledge(2) syscall.
+This is used to limit what your program can do.
 
-Blah blah blah.
+Once you pledge that your program will only make certain syscalls
+the kernel will kill the program if it attempts to call any other
+interfaces.
 
 =head2 EXPORT
 
@@ -53,28 +62,45 @@ Exports L</pledge> by default.
 
 C<:all> will also export L</pledgenames>
 
+=head1 METHODS
+
+=head2 pledge(@flags, \@paths)
+
+This is the primary interface to pledge.
+
+See the man page for more details.
+
+Returns true on success, returns false and sets C<$!> on failure.
+
+=head2 pledgenames
+
+=head1 BUGS AND LIMITATIONS
+
+Perl is particularly fond of C<stdio> so you usually need to include
+at least that flag.
+
 =head1 SEE ALSO
 
-Mention other useful documentation such as the documentation of
-related modules or operating system documentation (such as man pages
-in UNIX), or any relevant external documentation such as RFCs or
-standards.
-
-If you have a mailing list set up for your module, mention it here.
-
-If you have a web site set up for your module, mention it here.
+L<man 2 pledge|http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man2/pledge.2>
 
 =head1 AUTHOR
 
-Andrew Fresh, E<lt>afresh1@E<gt>
+Andrew Fresh, E<lt>afresh1@OpenBSD.orgE<gt>
 
-=head1 COPYRIGHT AND LICENSE
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2015 by Andrew Fresh
+Copyright (C) 2015 by Andrew Fresh E<lt>afresh1@OpenBSD.orgE<gt>
 
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.20.2 or,
-at your option, any later version of Perl 5 you may have available.
+Permission to use, copy, modify, and distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
 
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 =cut
