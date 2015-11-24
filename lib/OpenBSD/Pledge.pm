@@ -64,7 +64,7 @@ C<:all> will also export L</pledgenames>
 
 =head1 METHODS
 
-=head2 pledge(@flags, \@paths)
+=head2 pledge(@flags, [\@paths])
 
 This is the primary interface to pledge.
 
