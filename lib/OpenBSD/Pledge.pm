@@ -39,7 +39,7 @@ OpenBSD::Pledge - Perl interface to OpenBSD pledge(2)
 
   use OpenBSD::Pledge;
   my $file = "/usr/share/dict/words";
-  pledge(qw( stdio rpath ), [$file]);
+  pledge(qw( stdio rpath ), [$file]) || die "Unable to pledge: $!";
 
   open my $fh, '<', $file or die "Unable to open $file: $!\n";
   while (<$fh>) {
