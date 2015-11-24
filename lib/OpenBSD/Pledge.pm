@@ -74,6 +74,8 @@ Returns true on success, returns false and sets C<$!> on failure.
 
 =head2 pledgenames
 
+Returns a list of the possible flags you can pass to L</pledge>.
+
 =head1 BUGS AND LIMITATIONS
 
 Perl is particularly fond of C<stdio> so you usually need to include
