@@ -21,7 +21,7 @@ sub pledge {
     $paths = pop @flags if @flags and ref $flags[-1] eq 'ARRAY';
 
     my %seen;
-    my $flags = join q{ }, sort grep { !$seen{$_}++ } @flags;
+    my $flags = join q{ }, sort grep { !$seen{$_}++ } ( 'stdio', @flags );
 
     return _pledge( $flags, $paths );
 }
@@ -39,10 +39,10 @@ OpenBSD::Pledge - Perl interface to OpenBSD pledge(2)
 
   use OpenBSD::Pledge;
   my $file = "/usr/share/dict/words";
-  pledge(qw( stdio rpath ), [$file]) || die "Unable to pledge: $!";
+  pledge(qw( rpath ), [$file]) || die "Unable to pledge: $!";
 
   open my $fh, '<', $file or die "Unable to open $file: $!\n";
-  while (<$fh>) {
+  while ( readline($fh) ) {
     print if /pledge/i;
   }
   close $fh;
@@ -67,6 +67,8 @@ C<:all> will also export L</pledgenames>
 =head2 pledge(@flags, [\@paths])
 
 This is the primary interface to pledge.
+It always pledges C<stdio> because perl itself needs some of the
+syscalls provided by it.
 
 See the man page for more details.
 
@@ -78,8 +80,8 @@ Returns a list of the possible flags you can pass to L</pledge>.
 
 =head1 BUGS AND LIMITATIONS
 
-Perl is particularly fond of C<stdio> so you usually need to include
-at least that flag.
+Perl is particularly fond of C<stdio> so that flag is always added by
+L</pledge>.
 
 =head1 SEE ALSO
 

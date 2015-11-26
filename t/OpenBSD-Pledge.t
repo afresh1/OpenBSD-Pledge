@@ -114,9 +114,9 @@ like $@, qr/not an ARRAY reference/ms, "Correct error for non arrayref";
     OpenBSD::Pledge::pledge(qw( foo qux baz quux ), ["/tmp"]);
 
     is_deeply \@calls, [
-        [ "bar baz foo",      undef ],
-        [ "baz foo quux qux", ["/tmp"] ],
-    ], "Sorted and unique flags";
+        [ "bar baz foo stdio",      undef ],
+        [ "baz foo quux qux stdio", ["/tmp"] ],
+    ], "Sorted and unique flags, plus stdio";
 }
 
 #########################
