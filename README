@@ -4,10 +4,10 @@ NAME
 SYNOPSIS
       use OpenBSD::Pledge;
       my $file = "/usr/share/dict/words";
-      pledge(qw( stdio rpath ), [$file]) || die "Unable to pledge: $!";
+      pledge(qw( rpath ), [$file]) || die "Unable to pledge: $!";
 
       open my $fh, '<', $file or die "Unable to open $file: $!\n";
-      while (<$fh>) {
+      while ( readline($fh) ) {
         print if /pledge/i;
       }
       close $fh;
@@ -27,7 +27,8 @@ DESCRIPTION
 
 METHODS
   pledge(@flags, [\@paths])
-    This is the primary interface to pledge.
+    This is the primary interface to pledge. It always pledges "stdio"
+    because perl itself needs some of the syscalls provided by it.
 
     See the man page for more details.
 
@@ -37,8 +38,8 @@ METHODS
     Returns a list of the possible flags you can pass to "pledge".
 
 BUGS AND LIMITATIONS
-    Perl is particularly fond of "stdio" so you usually need to include at
-    least that flag.
+    Perl is particularly fond of "stdio" so that flag is always added by
+    "pledge".
 
 SEE ALSO
     man 2 pledge
