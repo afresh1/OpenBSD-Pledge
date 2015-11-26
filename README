@@ -28,9 +28,7 @@ DESCRIPTION
 METHODS
   pledge(@flags, [\@paths])
     This is the primary interface to pledge. It always pledges "stdio"
-    because perl itself needs some of the syscalls provided by it.
-
-    See the man page for more details.
+    because perl(1) itself uses some of the provided system calls.
 
     Returns true on success, returns false and sets $! on failure.
 
@@ -42,7 +40,8 @@ BUGS AND LIMITATIONS
     "pledge".
 
 SEE ALSO
-    man 2 pledge
+    pledge(2)
+
     <http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man2/pledge.2>
 
 AUTHOR

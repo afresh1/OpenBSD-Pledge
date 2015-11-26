@@ -49,7 +49,7 @@ OpenBSD::Pledge - Perl interface to OpenBSD pledge(2)
 
 =head1 DESCRIPTION
 
-This module provides a perl interface to OpenBSD's pledge(2) syscall.
+This module provides a perl interface to OpenBSD's L<pledge(2)> syscall.
 This is used to limit what your program can do.
 
 Once you pledge that your program will only make certain syscalls
@@ -67,10 +67,8 @@ C<:all> will also export L</pledgenames>
 =head2 pledge(@flags, [\@paths])
 
 This is the primary interface to pledge.
-It always pledges C<stdio> because perl itself needs some of the
-syscalls provided by it.
-
-See the man page for more details.
+It always pledges C<stdio> because L<perl(1)> itself uses some of the
+provided system calls.
 
 Returns true on success, returns false and sets C<$!> on failure.
 
@@ -85,7 +83,9 @@ L</pledge>.
 
 =head1 SEE ALSO
 
-L<man 2 pledge|http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man2/pledge.2>
+L<pledge(2)>
+
+L<http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man2/pledge.2>
 
 =head1 AUTHOR
 
