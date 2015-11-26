@@ -116,7 +116,7 @@ like $@, qr/not an ARRAY reference/ms, "Correct error for non arrayref";
     is_deeply \@calls, [
         [ "bar baz foo stdio",      undef ],
         [ "baz foo quux qux stdio", ["/tmp"] ],
-    ], "Sorted and unique flags, plus stdio";
+    ], "Sorted and unique promises, plus stdio";
 }
 
 #########################

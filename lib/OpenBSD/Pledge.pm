@@ -15,15 +15,15 @@ require XSLoader;
 XSLoader::load('OpenBSD::Pledge', $VERSION);
 
 sub pledge {
-    my (@flags) = @_;
+    my (@promises) = @_;
 
     my $paths;
-    $paths = pop @flags if @flags and ref $flags[-1] eq 'ARRAY';
+    $paths = pop @promises if @promises and ref $promises[-1] eq 'ARRAY';
 
     my %seen;
-    my $flags = join q{ }, sort grep { !$seen{$_}++ } ( 'stdio', @flags );
+    my $promises = join q{ }, sort grep { !$seen{$_}++ } ( 'stdio', @promises );
 
-    return _pledge( $flags, $paths );
+    return _pledge( $promises, $paths );
 }
 
 1;
@@ -64,7 +64,7 @@ C<:all> will also export L</pledgenames>
 
 =head1 METHODS
 
-=head2 pledge(@flags, [\@paths])
+=head2 pledge(@promises, [\@paths])
 
 This is the primary interface to pledge.
 It always pledges C<stdio> because L<perl(1)> itself uses some of the
@@ -74,11 +74,11 @@ Returns true on success, returns false and sets C<$!> on failure.
 
 =head2 pledgenames
 
-Returns a list of the possible flags you can pass to L</pledge>.
+Returns a list of the possible promises you can pass to L</pledge>.
 
 =head1 BUGS AND LIMITATIONS
 
-Perl is particularly fond of C<stdio> so that flag is always added by
+Perl is particularly fond of C<stdio> so that promise is always added by
 L</pledge>.
 
 =head1 SEE ALSO

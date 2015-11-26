@@ -36,7 +36,7 @@ pledgenames()
         XSRETURN(i);
 
 int
-_pledge(const char * flags, SV * paths)
+_pledge(const char * promises, SV * paths)
     INIT:
         SSize_t numpaths = 0, n;
 
@@ -54,9 +54,9 @@ _pledge(const char * flags, SV * paths)
                 pledge_paths[n]
                     = SvPV_nolen(*av_fetch((AV *)SvRV(paths), n, 0));
 
-            RETVAL = pledge(flags, pledge_paths) != -1;
+            RETVAL = pledge(promises, pledge_paths) != -1;
         }
         else
-            RETVAL = pledge(flags, NULL) != -1;
+            RETVAL = pledge(promises, NULL) != -1;
 	OUTPUT:
 		RETVAL
