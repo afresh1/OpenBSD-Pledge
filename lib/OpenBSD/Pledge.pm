@@ -5,25 +5,27 @@ use strict;
 use warnings;
 
 use parent 'Exporter';
-our %EXPORT_TAGS = ( 'all' => [ qw( pledge pledgenames ) ] );
-our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
-our @EXPORT = qw( pledge ); ## no critic 'export'
+our %EXPORT_TAGS = ( 'all' => [qw( pledge pledgenames )] );
+our @EXPORT_OK   = ( @{ $EXPORT_TAGS{'all'} } );
+our @EXPORT      = qw( pledge );                           ## no critic 'export'
 
 our $VERSION = '0.01';
 
 require XSLoader;
-XSLoader::load('OpenBSD::Pledge', $VERSION);
+XSLoader::load( 'OpenBSD::Pledge', $VERSION );
 
-sub pledge {
-    my (@promises) = @_;
+sub pledge
+{
+	my (@promises) = @_;
 
-    my $paths;
-    $paths = pop @promises if @promises and ref $promises[-1] eq 'ARRAY';
+	my $paths;
+	$paths = pop @promises if @promises and ref $promises[-1] eq 'ARRAY';
 
-    my %seen;
-    my $promises = join q{ }, sort grep { !$seen{$_}++ } ( 'stdio', @promises );
+	my %seen;
+	my $promises = join q{ },
+	    sort grep { !$seen{$_}++ } ( 'stdio', @promises );
 
-    return _pledge( $promises, $paths );
+	return _pledge( $promises, $paths );
 }
 
 1;
