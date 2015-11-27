@@ -51,10 +51,9 @@ OpenBSD::Pledge - Perl interface to OpenBSD pledge(2)
 
 =head1 DESCRIPTION
 
-This module provides a perl interface to OpenBSD's L<pledge(2)> syscall.
-This is used to limit what your program can do.
+This module provides a perl interface to OpenBSD's L<pledge(2)> L<syscall(2)>.
 
-Once you pledge that your program will only make certain syscalls
+Once you promise that your program will only use certain syscalls
 the kernel will kill the program if it attempts to call any other
 interfaces.
 
@@ -68,9 +67,16 @@ C<:all> will also export L</pledgenames>
 
 =head2 pledge(@promises, [\@paths])
 
-This is the primary interface to pledge.
-It always pledges C<stdio> because L<perl(1)> itself uses some of the
-provided system calls.
+With L<pledge(2)> you can promise what abilities your program will need.
+You can pledge multiple times with more restrictive promises,
+but abilities can never be regained.
+
+This interface always promises C<stdio> because L<perl(1)> itself uses some of
+the provided system calls.
+
+You can supply an optional array reference of paths to be used as a whitelist,
+all other paths will appear not to exist.
+You may only limit the paths once.
 
 Returns true on success, returns false and sets C<$!> on failure.
 
