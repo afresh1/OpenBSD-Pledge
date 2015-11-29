@@ -1,3 +1,4 @@
+#	$OpenBSD$	#
 package OpenBSD::Pledge;
 
 use 5.020002;

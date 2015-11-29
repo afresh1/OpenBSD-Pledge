@@ -1,3 +1,5 @@
+/*	$OpenBSD$	*/
+
 /*
  * Copyright (c) 2015 Andrew Fresh <afresh1@openbsd.org>
  *
