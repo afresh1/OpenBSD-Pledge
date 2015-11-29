@@ -24,17 +24,16 @@ BEGIN { use_ok('OpenBSD::Pledge') }
 # PLEDGENAMES
 #########################
 
-is_deeply [ OpenBSD::Pledge::pledgenames() ],
-    [
-	'rpath',   'wpath',   'cpath',  'stdio',
-	'tmppath', 'dns',     'inet',   'flock',
-	'unix',    'id',      'ioctl',  'getpw',
-	'proc',    'settime', 'fattr',  'protexec',
-	'tty',     'sendfd',  'recvfd', 'exec',
-	'route',   'mcast',   'vminfo', 'ps',
-	'coredump'
-    ],
-    "Expected list of Pledge names";
+# Here we just test that we get a small subset of names back
+# because there is no point in failing if someone adds new names.
+
+my %names = map { $_ => 1 } OpenBSD::Pledge::pledgenames();
+ok $names{$_}, "$_ pledge name exists" for qw(
+    stdio
+    rpath
+    wpath
+    cpath
+);
 
 #########################
 # _PLEDGE
