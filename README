@@ -49,7 +49,7 @@ BUGS AND LIMITATIONS
 SEE ALSO
     pledge(2)
 
-    <http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man2/pledge.2>
+    <http://man.openbsd.org/pledge.2>
 
 AUTHOR
     Andrew Fresh, <afresh1@OpenBSD.org>
