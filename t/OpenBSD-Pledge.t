@@ -10,6 +10,7 @@ use strict;
 use warnings;
 
 use Fcntl qw( O_RDONLY O_WRONLY );
+use File::Temp;
 
 use Config;
 my %sig_num;
@@ -47,9 +48,11 @@ sub xspledge_ok ($$)    ## no critic 'prototypes'
 
 	my $ok = 0;
 	foreach my $pledge ( q{}, $name ) {
+		my $dir = File::Temp->newdir('OpenBSD-Pledge-XXXXXXXXX');
 		my $pid = fork // die "Unable to fork for $name: $!\n";
 
 		if ( !$pid ) {
+			chdir($dir);
 			OpenBSD::Pledge::_pledge( "abort" );  # non fatal
 			OpenBSD::Pledge::_pledge( "stdio $pledge" )
 			    || die "[$name] $!\n";
@@ -66,8 +69,6 @@ sub xspledge_ok ($$)    ## no critic 'prototypes'
 			$ok += is $? & 127, $sig_num{ABRT},
 			    "[$name] ABRT without pledge";
 		}
-
-		unlink 'perl.core';
 	}
 	return $ok == 2;
 }
