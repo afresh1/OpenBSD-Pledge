@@ -10,7 +10,7 @@ our %EXPORT_TAGS = ( 'all' => [qw( pledge pledgenames )] );
 our @EXPORT_OK   = ( @{ $EXPORT_TAGS{'all'} } );
 our @EXPORT      = qw( pledge );                           ## no critic 'export'
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 require XSLoader;
 XSLoader::load( 'OpenBSD::Pledge', $VERSION );
@@ -19,14 +19,11 @@ sub pledge
 {
 	my (@promises) = @_;
 
-	my $paths;
-	$paths = pop @promises if @promises and ref $promises[-1] eq 'ARRAY';
-
 	my %seen;
 	my $promises = join q{ },
 	    sort grep { !$seen{$_}++ } ( 'stdio', @promises );
 
-	return _pledge( $promises, $paths );
+	return _pledge( $promises );
 }
 
 1;
@@ -43,7 +40,7 @@ OpenBSD::Pledge - Perl interface to OpenBSD pledge(2)
   use OpenBSD::Pledge;
 
   my $file = "/usr/share/dict/words";
-  pledge(qw( rpath ), [$file]) || die "Unable to pledge: $!";
+  pledge(qw( rpath ) ) || die "Unable to pledge: $!";
   open my $fh, '<', $file or die "Unable to open $file: $!";
 
   pledge() || die "Unable to pledge again: $!";
@@ -70,8 +67,6 @@ C<:all> will also export L</pledgenames>
 =over
 
 =item pledge(@promises)
-
-=item pledge(@promises, \@paths)
 
 Perl interface to L<pledge(2)>.
 
