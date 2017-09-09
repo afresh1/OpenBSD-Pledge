@@ -40,7 +40,7 @@ OpenBSD::Pledge - Perl interface to OpenBSD pledge(2)
   use OpenBSD::Pledge;
 
   my $file = "/usr/share/dict/words";
-  pledge(qw( rpath ) ) || die "Unable to pledge: $!";
+  pledge( qw( rpath ) ) || die "Unable to pledge: $!";
   open my $fh, '<', $file or die "Unable to open $file: $!";
 
   pledge() || die "Unable to pledge again: $!";
@@ -64,18 +64,18 @@ C<:all> will also export L</pledgenames>
 
 =head1 FUNCTIONS
 
-=over
-
-=item pledge(@promises)
+=head2 pledge
 
 Perl interface to L<pledge(2)>.
+
+	pledge(@promises)
 
 The "stdio" promise is always implied,
 as L<perl(1)> itself is useless without it.
 
 Returns true on success, returns false and sets $! on failure
 
-=item pledgenames
+=head2 pledgenames
 
 Returns a list of the possible promises you can pass to L</pledge>.
 
