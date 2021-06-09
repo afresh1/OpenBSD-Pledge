@@ -3,13 +3,13 @@ NAME
 
 SYNOPSIS
       use OpenBSD::Pledge;
-      my $file = "/usr/share/dict/words";
-      pledge(qw( rpath ), [$file]) || die "Unable to pledge: $!";
 
-      open my $fh, '<', $file or die "Unable to open $file: $!\n";
-      while ( readline($fh) ) {
-        print if /pledge/i;
-      }
+      my $file = "/usr/share/dict/words";
+      pledge( qw( rpath ) ) || die "Unable to pledge: $!";
+      open my $fh, '<', $file or die "Unable to open $file: $!";
+
+      pledge() || die "Unable to pledge again: $!";
+      print grep { /pledge/i } readline($fh);
       close $fh;
 
 DESCRIPTION
@@ -19,28 +19,19 @@ DESCRIPTION
     kernel will kill the program if it attempts to call any other
     interfaces.
 
-  EXPORT
+EXPORT
     Exports "pledge" by default.
 
-    ":all" will also export "pledgenames"
+FUNCTIONS
+  pledge
+    Perl interface to pledge(2).
 
-METHODS
-  pledge(@promises, [\@paths])
-    With pledge(2) you can promise what abilities your program will need.
-    You can pledge multiple times with more restrictive promises, but
-    abilities can never be regained.
+            pledge(@promises)
 
-    This interface always promises "stdio" because perl(1) itself uses some
-    of the provided system calls.
+    The "stdio" promise is always implied, as perl(1) itself is useless
+    without it.
 
-    You can supply an optional array reference of paths to be used as a
-    whitelist, all other paths will appear not to exist. You may only limit
-    the paths once.
-
-    Returns true on success, returns false and sets $! on failure.
-
-  pledgenames
-    Returns a list of the possible promises you can pass to "pledge".
+    Returns true on success, returns false and sets $! on failure
 
 BUGS AND LIMITATIONS
     Perl is particularly fond of "stdio" so that promise is always added by

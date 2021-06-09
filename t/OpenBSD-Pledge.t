@@ -22,21 +22,6 @@ BEGIN { use_ok('OpenBSD::Pledge') }
 ## no critic 'private'
 ## no critic 'punctuation'
 #########################
-# PLEDGENAMES
-#########################
-
-# Here we just test that we get a small subset of names back
-# because there is no point in failing if someone adds new names.
-
-my %names = map { $_ => 1 } OpenBSD::Pledge::pledgenames();
-ok $names{$_}, "$_ pledge name exists" for qw(
-    stdio
-    rpath
-    wpath
-    cpath
-);
-
-#########################
 # _PLEDGE
 #########################
 
