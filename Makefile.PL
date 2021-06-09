@@ -4,7 +4,7 @@ WriteMakefile(
 	NAME          => 'OpenBSD::Pledge',
 	VERSION_FROM  => 'lib/OpenBSD/Pledge.pm',
 	ABSTRACT_FROM => 'lib/OpenBSD/Pledge.pm',
-	AUTHOR        => 'Andrew Fresh <afresh1@OpenBSD.org>',
+	AUTHOR        => 'Andrew Hewus Fresh <afresh1@OpenBSD.org>',
 
 	#LICENSE           => 'openbsd',
 	#Value must be from legacy list of licenses here

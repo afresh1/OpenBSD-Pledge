@@ -43,10 +43,10 @@ SEE ALSO
     <http://man.openbsd.org/pledge.2>
 
 AUTHOR
-    Andrew Fresh, <afresh1@OpenBSD.org>
+    Andrew Hewus Fresh, <afresh1@OpenBSD.org>
 
 LICENSE AND COPYRIGHT
-    Copyright (C) 2015 by Andrew Fresh <afresh1@OpenBSD.org>
+    Copyright (C) 2015,2021 by Andrew Hewus Fresh <afresh1@OpenBSD.org>
 
     Permission to use, copy, modify, and distribute this software for any
     purpose with or without fee is hereby granted, provided that the above

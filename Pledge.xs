@@ -1,7 +1,7 @@
 /*	$OpenBSD$	*/
 
 /*
- * Copyright (c) 2015 Andrew Fresh <afresh1@openbsd.org>
+ * Copyright (c) 2015,2021 Andrew Hewus Fresh <afresh1@openbsd.org>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
